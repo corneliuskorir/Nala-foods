@@ -1,7 +1,8 @@
-from .interface.inventory_service_interface import InventoryInterface
+from .interface.repository_interface import RepositoryInterface
 
 
-class InventoryService(InventoryInterface):
+class InventoryRepository(RepositoryInterface):
+
     def __init__(self):
         pass
 

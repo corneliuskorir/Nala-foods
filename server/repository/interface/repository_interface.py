@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class InventoryInterface(ABC):
+class RepositoryInterface(ABC):
 
     @abstractmethod
     def get(self):
@@ -9,11 +9,11 @@ class InventoryInterface(ABC):
 
     @abstractmethod
     def add(self, data):
-        """add item"""
+        """add items"""
 
     @abstractmethod
     def get_item(self, id):
-        """get item by id"""
+        """get item"""
 
     @abstractmethod
     def update(self, id, data):
@@ -21,4 +21,4 @@ class InventoryInterface(ABC):
 
     @abstractmethod
     def delete(self, id):
-        """delete items"""
+        """delete item"""
