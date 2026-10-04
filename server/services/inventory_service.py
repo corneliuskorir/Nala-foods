@@ -11,6 +11,8 @@ class InventoryService(InventoryInterface):
         return self._repo.get()
 
     def add(self, data):
+        new_id = max((item["id"] for item in self.get()), default=0) + 1
+        data["id"] = new_id
         product = Product(**data)
         return self._repo.add(data=product.to_dict())
 

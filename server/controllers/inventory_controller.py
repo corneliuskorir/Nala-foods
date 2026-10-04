@@ -6,12 +6,12 @@ def inventory_blueprint(service: InventoryService):
 
     inventory_bp = Blueprint("inventory", __name__, url_prefix="/inventory")
 
-    @inventory_bp.route("/", methods=["GET"])
+    @inventory_bp.route("", methods=["GET"])
     def get_items():
         products = service.get()
         return jsonify(products), 200
 
-    @inventory_bp.route("/", methods=["POST"])
+    @inventory_bp.route("", methods=["POST"])
     def add_item():
         data = request.get_json()
         item = service.add(data=data)

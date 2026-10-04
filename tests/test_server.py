@@ -1,7 +1,22 @@
-from server import create_app, Product
+from server import create_app, Product, inventory
+
 import pytest
 
 app = create_app()
+
+
+@pytest.fixture(autouse=True)
+def clear_data():
+    inventory["products"].clear()
+    yield
+    inventory["products"].clear()
+
+
+@pytest.fixture
+def client():
+    app.config["TESTING"] = True
+    with app.test_client() as client:
+        yield client
 
 
 class TestServer:
@@ -11,28 +26,40 @@ class TestServer:
         assert "message" in res.get_json()
         assert res.status_code == 200
 
-    def test_get_invetory_route(self):
-        client = app.test_client()
+    def test_get_inventory_route(self, client):
         res = client.get("/inventory")
         assert res.status_code == 200
 
-    def test_post_invetory_route(self):
-        client = app.test_client()
-        res = client.post("/inventory")
+    def test_post_inventory_route(self, client):
+        res = client.post("/inventory", json={"name": "test"})
         assert res.status_code == 201
 
-    def test_get_invetory_item_route(self):
-        client = app.test_client()
+        res = client.get("/inventory/1")
+        data = res.get_json()
+        assert data["name"] == "test"
+        assert data["id"] == 1
+
+    def test_get_invetory_item_route(self, client):
+        res = client.post("/inventory", json={"name": "test"})
+        assert res.status_code == 201
+
         res = client.get("/inventory/1")
         assert res.status_code == 200
 
-    def test_patch_invetory_item_route(self):
-        client = app.test_client()
-        res = client.patch("/inventory/1")
+        data = res.get_json()
+        assert data["name"] == "test"
+        assert data["id"] == 1
+
+    def test_patch_invetory_item_route(self, client):
+        res = client.post("/inventory", json={"name": "test"})
         assert res.status_code == 201
 
-    def test_delete_invetory_item_route(self):
-        client = app.test_client()
+        res = client.patch("/inventory/1", json={"name": "changed"})
+        data = res.get_json()
+        assert data["name"] == "changed"
+        assert res.status_code == 201
+
+    def test_delete_invetory_item_route(self, client):
         res = client.delete("/inventory/1")
         assert res.status_code == 204
 

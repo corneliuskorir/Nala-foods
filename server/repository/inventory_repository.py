@@ -23,8 +23,11 @@ class InventoryRepository(RepositoryInterface):
         self.inventory["products"] = [
             item for item in self.inventory["products"] if item["id"] != id
         ]
+        print(item)
         item |= data
+        print(item)
         self.inventory["products"].append(item)
+        print(self.inventory["products"])
         return item
 
     def delete(self, id):
