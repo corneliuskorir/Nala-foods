@@ -1,4 +1,5 @@
 from .interface.repository_interface import RepositoryInterface
+from data import inventory
 
 
 class InventoryRepository(RepositoryInterface):
@@ -7,16 +8,25 @@ class InventoryRepository(RepositoryInterface):
         pass
 
     def get(self):
-        pass
+        return inventory["products"]
 
     def add(self, data):
-        pass
+        return inventory["products"].append(data)
 
     def get_item(self, id):
-        pass
+        return next((item for item in inventory["products"] if item["id"] == id), None)
 
     def update(self, id, data):
-        pass
+        item = self.get_item(id)
+        inventory["products"] = [
+            item for item in inventory["products"] if item["id"] != id
+        ]
+        item |= data
+        inventory["products"].append(item)
+        return item
 
     def delete(self, id):
-        pass
+        inventory["products"] = [
+            item for item in inventory["products"] if item["id"] != id
+        ]
+        return True
