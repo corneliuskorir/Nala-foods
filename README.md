@@ -12,38 +12,59 @@ Start the webserver:
 cd server
 python run.py
 ```
+Cli
+```
+cd client
+python app.py
+```
 # Run Tests
 ```
 python -m pytest
 ```
 
-# End Points
+# Operations
 ### GET  
 
 index  
 ```
-'/' #home page
+'''end point'''
+'/' #home page  
 ```
 inventory
 ```
-'/inventory' #get inventory itemss
+'''endpoint'''  
+'/inventory' #get inventory items   
+'''cli access'''  
+python app.py get
 ```
 inventory item
 ```
-'/inventory/<id>' #get inventory tem by id
+'''endpoint'''  
+'/inventory/<id>' #get inventory tem by id  
+'''cli access'''
+python app.py get-item <id>
 ```
 ### POST
 inventory
 ```
-'/inventory' # add inventory items
+'''endpoint'''
+'/inventory' # add inventory items  
+'''cli access'''
+python app.py add --n <name> (optional: --q <quantity> --b <brand1> <brand2> <...>) 
 ```
-### POST
+### PATCH
 inventory
 ```
+'''endpoint'''
 '/inventory/<id>' # update inventory items
+'''cli access'''
+python app.py edit <id> (optional:--n <name> --q <quantity> --b <brand1> )
 ```
 ### DELETE
 inventory
 ```
+'''endpoint'''
 '/inventory/<id>' # delete inventory items
+'''cli access'''
+python app.py delete <id>
 ```
