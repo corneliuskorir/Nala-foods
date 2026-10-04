@@ -1,1 +1,0 @@
-from .inventory_controller import inventory_blueprint

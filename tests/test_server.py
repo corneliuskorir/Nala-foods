@@ -11,6 +11,31 @@ class TestServer:
         assert "message" in res.get_json()
         assert res.status_code == 200
 
+    def test_get_invetory_route(self):
+        client = app.test_client()
+        res = client.get("/inventory")
+        assert res.status_code == 200
+
+    def test_post_invetory_route(self):
+        client = app.test_client()
+        res = client.post("/inventory")
+        assert res.status_code == 201
+
+    def test_get_invetory_item_route(self):
+        client = app.test_client()
+        res = client.get("/inventory/1")
+        assert res.status_code == 200
+
+    def test_patch_invetory_item_route(self):
+        client = app.test_client()
+        res = client.patch("/inventory/1")
+        assert res.status_code == 201
+
+    def test_delete_invetory_item_route(self):
+        client = app.test_client()
+        res = client.delete("/inventory/1")
+        assert res.status_code == 204
+
 
 # model
 

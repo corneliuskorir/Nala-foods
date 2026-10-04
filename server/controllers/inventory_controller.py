@@ -25,6 +25,6 @@ def inventory_blueprint():
 
     @inventory_bp.route("/<int:id>", methods=["DELETE"])
     def delete_item(id):
-        return jsonify({"message": "Delete item"})
+        return jsonify({"message": "Delete item"}), 204
 
     return inventory_bp

@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from controllers import inventory_blueprint
+from .controllers.inventory_controller import inventory_blueprint
 
 
 def create_app():
