@@ -27,3 +27,11 @@ class Product:
         if not brand and not isinstance(brand, str):
             raise ValueError("Invalid brand")
         self.brands.append(brand)
+
+    def to_dict(self):
+        return {
+            "id": self._id,
+            "name": self.name,
+            "quantity": self._quantity,
+            "brands": self.brands,
+        }

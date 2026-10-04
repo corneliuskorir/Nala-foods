@@ -1,11 +1,17 @@
 from flask import Flask, jsonify
-from .controllers.inventory_controller import inventory_blueprint
+from controllers import inventory_blueprint
+from services import InventoryService
+from repository import InventoryRepository
+from data import inventory
 
 
 def create_app():
     app = Flask(__name__)
 
-    app.register_blueprint(inventory_blueprint())
+    repo = InventoryRepository(inventory=inventory)
+    service = InventoryService(repository=repo)
+
+    app.register_blueprint(inventory_blueprint(service=service))
 
     @app.route("/", methods=["GET"])
     def entry():
