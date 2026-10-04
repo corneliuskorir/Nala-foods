@@ -42,11 +42,33 @@ def add_item(args):
             print("New product added successfully::")
             pprint.pprint(data, indent=2)
         else:
-            if "message" in res.json():
+            data = res.json()
+            if "message" in data:
                 print(
                     f"Failed to Post data:\nStatus code: {res.status_code}\n{data['message']}"
                 )
             else:
                 print(f"Failed to post data:\nStatus code: {res.status_code}")
+    except requests.exceptions.RequestException as e:
+        print(f"A network error occured: {e}")
+
+
+def get_item(args):
+    print(f"Serching for item id: {args.id} ...")
+
+    try:
+        res = requests.get(URL + f"/{args.id}")
+        if res.status_code == 200:
+            data = res.json()
+            print(f"Item ({data['name']})::")
+            pprint.pprint(data, indent=2)
+        else:
+            data = res.json()
+            if "message" in data:
+                print(
+                    f"Failed to retrieve data:\nStatus code: {res.status_code}\n{data['message']}"
+                )
+            else:
+                print(f"Failed to retrieve data:\nStatus code: {res.status_code}")
     except requests.exceptions.RequestException as e:
         print(f"A network error occured: {e}")

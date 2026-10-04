@@ -1,5 +1,5 @@
 import argparse
-from api import get_inventory, add_item
+from api import get_inventory, add_item, get_item
 
 
 def main():
@@ -21,8 +21,12 @@ def main():
         "--quantity", "--q", type=int, help="Quantity of product being added."
     )
     additem.add_argument("--brands", "--b", type=str, nargs="*")
-
     additem.set_defaults(func=add_item)
+
+    # get item by id
+    getitem = subparser.add_parser("get-item", help="Get item by id.")
+    getitem.add_argument("id", type=int, help="Id of queried item.")
+    getitem.set_defaults(func=get_item)
 
     args = parser.parse_args()
 
