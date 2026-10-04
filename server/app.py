@@ -1,8 +1,11 @@
 from flask import Flask, jsonify
+from controllers import inventory_blueprint
 
 
 def create_app():
     app = Flask(__name__)
+
+    app.register_blueprint(inventory_blueprint())
 
     @app.route("/", methods=["GET"])
     def entry():
@@ -12,9 +15,9 @@ def create_app():
                     "message": "Welcome to the Nala foods api",
                     "status": "Active",
                     "routes": [
-                        {"endpoint": "/products", "methods": ["GET", "POST"]},
+                        {"endpoint": "/inventory", "methods": ["GET", "POST"]},
                         {
-                            "endpoint": "/products/<id>",
+                            "endpoint": "/inventory/<id>",
                             "methods": ["GET", "PATCH", "DELETE"],
                         },
                     ],
