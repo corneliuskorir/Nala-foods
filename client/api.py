@@ -72,3 +72,57 @@ def get_item(args):
                 print(f"Failed to retrieve data:\nStatus code: {res.status_code}")
     except requests.exceptions.RequestException as e:
         print(f"A network error occured: {e}")
+
+
+def edit_item(args):
+    print(f"Modifying item at id:{args.id}...")
+
+    if not any([args.name, args.quantity, args.brands]):
+        print(
+            f"Error: Missing arguments. Atleast one argument must be provided [name (--n),quantity (--q) , brands (--b)]."
+        )
+        return
+
+    edit = {}
+    if args.name:
+        edit["name"] = args.name
+    if args.quantity:
+        edit["quantity"] = args.quantity
+    if args.brands:
+        edit["brands"] = args.brands
+
+    try:
+        res = requests.patch(URL + f"/{args.id}", json=edit)
+        if res.status_code == 201:
+            data = res.json()
+            print("Product modified successfully::")
+            pprint.pprint(data, indent=2)
+        else:
+            data = res.json()
+            if "message" in data:
+                print(
+                    f"Failed to Post data:\nStatus code: {res.status_code}\n{data['message']}"
+                )
+            else:
+                print(f"Failed to post data:\nStatus code: {res.status_code}")
+    except requests.exceptions.RequestException as e:
+        print(f"A network error occured: {e}")
+
+
+def delete_item(args):
+    print(f"Removing item at id: {args.id} ...")
+
+    try:
+        res = requests.delete(URL + f"/{args.id}")
+        if res.status_code == 204:
+            print("Item deleted successfully.")
+        else:
+            data = res.json()
+            if "message" in data:
+                print(
+                    f"Failed to retrieve data:\nStatus code: {res.status_code}\n{data['message']}"
+                )
+            else:
+                print(f"Failed to retrieve data:\nStatus code: {res.status_code}")
+    except requests.exceptions.RequestException as e:
+        print(f"A network error occured: {e}")
